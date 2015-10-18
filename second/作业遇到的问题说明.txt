@@ -1,0 +1,45 @@
+编写程序时候遇到的问题：
+
+在声明worker类的一个友元函数friend ostream& operator<<(ostream& out,const worker& w);      //友元函数，显示工人基本信息
+之后，定义的时候想要输出该类的成员，但是通过out<<w.name<<w.age<<w.sex<<w.pay_per_hour<<endl; 调用报错，
+错误：'name' : cannot access protected member declared in class 'worker'  ，不知道为什么友元函数不可以引用类的protected类型成员
+这部分代码如下：
+
+
+class worker                  //抽象基类
+{
+protected:
+	string name;
+	int age;
+	char sex;
+	float pay_per_hour;
+public:
+	worker(string n,int a,char s,float p)
+	{
+		name=n;
+		age=a;
+		sex=s;
+		pay_per_hour=p;
+	}
+	virtual void compute_pay(double hours)=0;            //纯虚函数，
+    friend ostream& operator<<(ostream& out,const worker& w);      //友元函数，显示工人基本信息
+};
+
+         
+                   //问题？
+
+
+
+ostream& operator<<(ostream& out,const worker&w)
+{
+	
+
+	out<<w.name<<w.age<<w.sex<<w.pay_per_hour<<endl;    
+	//这里报错，不知道为什么友元不能引用protected类型的成员？？？？？？？？？
+
+	
+	return out;
+}
+
+
+
